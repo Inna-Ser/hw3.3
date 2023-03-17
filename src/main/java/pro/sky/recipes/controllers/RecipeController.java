@@ -5,6 +5,7 @@ import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.impl.RecipeServiceImpl;
 
+
 @RestController
 @RequestMapping("/recipe")
 public class RecipeController {

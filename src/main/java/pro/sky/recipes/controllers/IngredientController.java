@@ -8,6 +8,7 @@ import pro.sky.recipes.dto.IngredientDTO;
 import pro.sky.recipes.model.Ingredients;
 import pro.sky.recipes.services.impl.IngredientsServiceImpl;
 
+
 @RestController
 @RequestMapping("/ingredient")
 public class IngredientController {

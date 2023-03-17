@@ -2,6 +2,7 @@ package pro.sky.recipes.model;
 
 import java.util.Objects;
 
+
 public class Ingredients {
     private String name;
     private int count;

@@ -10,7 +10,6 @@ import java.util.TreeMap;
 
 @Service
 public class IngredientsServiceImpl implements IngredientsService {
-
     private int idGeneration = 1;
     private int id = idGeneration++;
     private final Map<Integer, Ingredients> ingredientsMap = new TreeMap<Integer, Ingredients>();

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Recipe {
-
     private String name;
     private int cookingTime;
     private List<Ingredients> ingredients;

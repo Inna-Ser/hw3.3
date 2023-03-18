@@ -10,4 +10,9 @@ public interface RecipeService {
 
     RecipeDTO getRecipe(int id);
 
+    RecipeDTO editRecipe(int id, Recipe recipe);
+
+    boolean deleteRecipe(int id);
+
+    RecipeDTO getAllRecipe();
 }

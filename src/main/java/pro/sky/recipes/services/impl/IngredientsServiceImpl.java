@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.recipes.dto.IngredientDTO;
 import pro.sky.recipes.model.Ingredients;
 import pro.sky.recipes.services.IngredientsService;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -27,5 +28,32 @@ public class IngredientsServiceImpl implements IngredientsService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public IngredientDTO editIngredient(int id, Ingredients ingredients) {
+        if (ingredientsMap.containsKey(id)) {
+            ingredientsMap.put(id, ingredients);
+            return IngredientDTO.from(id, ingredients);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean deleteIngredient(int id) {
+        if (ingredientsMap.containsKey(id)) {
+            ingredientsMap.remove(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public IngredientDTO getAllIngredient() {
+        for (Ingredients ingredients : ingredientsMap.values()){
+            Ingredients ingredients1 = ingredientsMap.get(id);
+        }
+        return (IngredientDTO) ingredientsMap;
     }
 }

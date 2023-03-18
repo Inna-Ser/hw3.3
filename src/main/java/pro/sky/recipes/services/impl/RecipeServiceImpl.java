@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.RecipeService;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -28,5 +29,32 @@ public class RecipeServiceImpl implements RecipeService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public RecipeDTO editRecipe(int id, Recipe recipe) {
+        if (recipeMap.containsKey(id)) {
+            recipeMap.put(id, recipe);
+            return RecipeDTO.from(id, recipe);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean deleteRecipe(int id) {
+        if (recipeMap.containsKey(id)) {
+            recipeMap.remove(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public RecipeDTO getAllRecipe() {
+        for (Recipe recipes : recipeMap.values()){
+            Recipe recipe = recipeMap.get(id);
+        }
+        return (RecipeDTO) recipeMap;
     }
 }

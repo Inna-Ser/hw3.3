@@ -10,4 +10,9 @@ public interface IngredientsService {
 
     IngredientDTO getIngredient(int id);
 
+    IngredientDTO editIngredient(int id, Ingredients ingredients);
+
+    boolean deleteIngredient(int id);
+
+    IngredientDTO getAllIngredient();
 }

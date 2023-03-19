@@ -11,6 +11,9 @@ public class Recipe {
     private List<Ingredients> ingredients;
     private List<String> instruction;
 
+    public Recipe() {
+    }
+
     public Recipe(String name, int cookingTime, List<Ingredients> ingredients, List<String> instruction) {
         this.name = name;
         this.cookingTime = cookingTime;

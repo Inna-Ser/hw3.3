@@ -8,6 +8,9 @@ public class Ingredients {
     private int count;
     private String unitOfMeasurement;
 
+    public Ingredients() {
+    }
+
     public Ingredients(String name, int count, String unitOfMeasurement) {
         this.name = name;
         this.count = count;

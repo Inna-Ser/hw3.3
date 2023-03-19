@@ -5,6 +5,8 @@ import pro.sky.recipes.dto.IngredientDTO;
 import pro.sky.recipes.model.Ingredients;
 import pro.sky.recipes.services.IngredientsService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -51,9 +53,9 @@ public class IngredientsServiceImpl implements IngredientsService {
 
     @Override
     public IngredientDTO getAllIngredient() {
-        for (Ingredients ingredients : ingredientsMap.values()){
-            Ingredients ingredients1 = ingredientsMap.get(id);
-        }
-        return (IngredientDTO) ingredientsMap;
+        List<IngredientDTO> ingredientDTOList = new ArrayList<>();
+        for (IngredientDTO ingredients : ingredientDTOList) ;
+        return (IngredientDTO) ingredientDTOList;
     }
 }
+

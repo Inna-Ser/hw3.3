@@ -2,6 +2,7 @@ package pro.sky.recipes.dto;
 
 import pro.sky.recipes.model.Ingredients;
 
+
 public class IngredientDTO {
     private final String name;
     private final int count;

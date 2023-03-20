@@ -5,6 +5,8 @@ import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.RecipeService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -29,5 +31,33 @@ public class RecipeServiceImpl implements RecipeService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public RecipeDTO editRecipe(int id, Recipe recipe) {
+        if (recipeMap.containsKey(id)) {
+            recipeMap.put(id, recipe);
+            return RecipeDTO.from(id, recipe);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean deleteRecipe(int id) {
+        if (recipeMap.containsKey(id)) {
+            recipeMap.remove(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<RecipeDTO> getAllRecipe() {
+        List<RecipeDTO> recipeDTOList = new ArrayList<>();
+        for (Recipe recipes : recipeMap.values()) {
+            recipeDTOList.add(RecipeDTO.from(recipes));
+        }
+        return recipeDTOList;
     }
 }

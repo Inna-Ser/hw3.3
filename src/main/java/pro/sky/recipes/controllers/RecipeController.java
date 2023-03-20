@@ -1,5 +1,6 @@
 package pro.sky.recipes.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Recipe;
@@ -9,6 +10,7 @@ import pro.sky.recipes.services.impl.RecipeServiceImpl;
 
 @RestController
 @RequestMapping("/recipe")
+//@Tag(name="Recipe", discription = "The list of recipe")
 public class RecipeController {
     private final RecipeServiceImpl recipeService;
 

@@ -27,7 +27,7 @@ public class IngredientController {
         return ingredientsService.getAllIngredient();
     }
 
-    @GetMapping("/{id}")
+    @PostMapping("/{id}")
     public IngredientDTO addRecipe(@RequestBody Ingredients ingredients) {
         return ingredientsService.addIngredient(ingredients);
     }

@@ -3,6 +3,8 @@ package pro.sky.recipes.services;
 import pro.sky.recipes.dto.IngredientDTO;
 import pro.sky.recipes.model.Ingredients;
 
+import java.util.List;
+
 
 public interface IngredientsService {
 
@@ -14,5 +16,5 @@ public interface IngredientsService {
 
     boolean deleteIngredient(int id);
 
-    IngredientDTO getAllIngredient();
+    List<IngredientDTO> getAllIngredient();
 }

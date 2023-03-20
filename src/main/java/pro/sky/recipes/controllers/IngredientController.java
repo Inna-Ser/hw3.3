@@ -2,10 +2,10 @@ package pro.sky.recipes.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import pro.sky.recipes.dto.IngredientDTO;
-import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Ingredients;
-import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.impl.IngredientsServiceImpl;
+
+import java.util.List;
 
 
 @RestController
@@ -23,7 +23,7 @@ public class IngredientController {
     }
 
     @GetMapping
-    public IngredientDTO getAllIngredients() {
+    public List<IngredientDTO> getAllIngredients() {
         return ingredientsService.getAllIngredient();
     }
 

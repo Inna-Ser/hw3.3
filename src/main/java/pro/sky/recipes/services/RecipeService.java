@@ -3,6 +3,8 @@ package pro.sky.recipes.services;
 import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Recipe;
 
+import java.util.List;
+
 
 public interface RecipeService {
 
@@ -14,5 +16,5 @@ public interface RecipeService {
 
     boolean deleteRecipe(int id);
 
-    RecipeDTO getAllRecipe();
+    List<RecipeDTO> getAllRecipe();
 }

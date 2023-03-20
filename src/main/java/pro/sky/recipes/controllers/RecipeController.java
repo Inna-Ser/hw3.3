@@ -1,11 +1,11 @@
 package pro.sky.recipes.controllers;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Recipe;
-import pro.sky.recipes.services.RecipeService;
 import pro.sky.recipes.services.impl.RecipeServiceImpl;
+
+import java.util.List;
 
 
 @RestController
@@ -24,7 +24,7 @@ public class RecipeController {
     }
 
     @GetMapping
-    public RecipeDTO getAllRecipe() {
+    public List<RecipeDTO> getAllRecipe() {
         return recipeService.getAllRecipe();
     }
 

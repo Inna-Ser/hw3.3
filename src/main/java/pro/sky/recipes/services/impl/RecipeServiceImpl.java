@@ -53,10 +53,11 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public RecipeDTO getAllRecipe() {
+    public List<RecipeDTO> getAllRecipe() {
         List<RecipeDTO> recipeDTOList = new ArrayList<>();
-        for (RecipeDTO recipes : recipeDTOList) {
+        for (Recipe recipes : recipeMap.values()) {
+            recipeDTOList.add(RecipeDTO.from(recipes));
         }
-        return (RecipeDTO) recipeDTOList;
+        return recipeDTOList;
     }
 }

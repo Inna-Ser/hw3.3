@@ -52,10 +52,12 @@ public class IngredientsServiceImpl implements IngredientsService {
     }
 
     @Override
-    public IngredientDTO getAllIngredient() {
+    public List<IngredientDTO> getAllIngredient() {
         List<IngredientDTO> ingredientDTOList = new ArrayList<>();
-        for (IngredientDTO ingredients : ingredientDTOList) ;
-        return (IngredientDTO) ingredientDTOList;
+        for (Ingredients ingredients : ingredientsMap.values()) {
+            ingredientDTOList.add(IngredientDTO.from(ingredients));
+        }
+        return ingredientDTOList;
     }
 }
 

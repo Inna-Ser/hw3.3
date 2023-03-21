@@ -1,5 +1,6 @@
 package pro.sky.recipes.services.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.recipes.dto.IngredientDTO;
 import pro.sky.recipes.model.Ingredients;
@@ -18,37 +19,30 @@ public class IngredientsServiceImpl implements IngredientsService {
 
     @Override
     public IngredientDTO addIngredient(Ingredients ingredients) {
+        StringUtils.isBlank((CharSequence) ingredients);
         ingredientsMap.put(id, ingredients);
         return IngredientDTO.from(id, ingredients);
     }
 
     @Override
     public IngredientDTO getIngredient(int id) {
-        if (ingredientsMap != null || !ingredientsMap.isEmpty()) {
+        StringUtils.isBlank((CharSequence) ingredientsMap);
             Ingredients ingredients = ingredientsMap.get(id);
             return IngredientDTO.from(id, ingredients);
-        } else {
-            return null;
-        }
     }
 
     @Override
     public IngredientDTO editIngredient(int id, Ingredients ingredients) {
-        if (ingredientsMap.containsKey(id)) {
+        StringUtils.isBlank((CharSequence) ingredientsMap);
             ingredientsMap.put(id, ingredients);
             return IngredientDTO.from(id, ingredients);
-        } else {
-            return null;
-        }
     }
 
     @Override
     public boolean deleteIngredient(int id) {
-        if (ingredientsMap.containsKey(id)) {
+        StringUtils.isBlank((CharSequence) ingredientsMap);
             ingredientsMap.remove(id);
             return true;
-        }
-        return false;
     }
 
     @Override

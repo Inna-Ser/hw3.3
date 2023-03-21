@@ -1,5 +1,6 @@
 package pro.sky.recipes.services.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Recipe;
@@ -19,32 +20,28 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public RecipeDTO addRecipe(Recipe recipe) {
+        StringUtils.isBlank((CharSequence) recipe);
         recipeMap.put(idGeneration, recipe);
         return RecipeDTO.from(id, recipe);
     }
 
     @Override
     public RecipeDTO getRecipe(int id) {
-        if (recipeMap != null || !recipeMap.isEmpty()) {
+        StringUtils.isBlank((CharSequence) recipeMap);
             Recipe recipe = recipeMap.get(id);
             return RecipeDTO.from(id, recipe);
-        } else {
-            return null;
-        }
     }
 
     @Override
     public RecipeDTO editRecipe(int id, Recipe recipe) {
-        if (recipeMap.containsKey(id)) {
+        StringUtils.isBlank((CharSequence) recipeMap);
             recipeMap.put(id, recipe);
             return RecipeDTO.from(id, recipe);
-        } else {
-            return null;
-        }
     }
 
     @Override
     public boolean deleteRecipe(int id) {
+        StringUtils.isBlank((CharSequence) recipeMap);
         if (recipeMap.containsKey(id)) {
             recipeMap.remove(id);
             return true;

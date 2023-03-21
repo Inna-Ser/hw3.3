@@ -48,8 +48,8 @@ public class IngredientsServiceImpl implements IngredientsService {
     @Override
     public List<IngredientDTO> getAllIngredient() {
         List<IngredientDTO> ingredientDTOList = new ArrayList<>();
-        for (Ingredients ingredients : ingredientsMap.values()) {
-            ingredientDTOList.add(IngredientDTO.from(ingredients));
+        for (Map.Entry<Integer, Ingredients> entry: ingredientsMap.entrySet()) {
+            ingredientDTOList.add(IngredientDTO.from(entry.getKey(), entry.getValue()));
         }
         return ingredientDTOList;
     }

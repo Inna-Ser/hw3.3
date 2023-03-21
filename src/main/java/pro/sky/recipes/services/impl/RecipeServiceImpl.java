@@ -52,8 +52,8 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<RecipeDTO> getAllRecipe() {
         List<RecipeDTO> recipeDTOList = new ArrayList<>();
-        for (Recipe recipes : recipeMap.values()) {
-            recipeDTOList.add(RecipeDTO.from(recipes));
+        for (Map.Entry<Integer, Recipe> entry : recipeMap.entrySet()) {
+            recipeDTOList.add(RecipeDTO.from(entry.getKey(),entry.getValue()));
         }
         return recipeDTOList;
     }

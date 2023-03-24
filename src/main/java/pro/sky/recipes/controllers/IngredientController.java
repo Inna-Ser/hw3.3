@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.recipes.dto.IngredientDTO;
 import pro.sky.recipes.model.Ingredients;
@@ -17,9 +18,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ingredient")
+@NoArgsConstructor
 @Tag(name = "Ingredients", description = "The list and methods of ingredients")
 public class IngredientController {
-    private final IngredientsServiceImpl ingredientsService;
+    private IngredientsServiceImpl ingredientsService;
 
     public IngredientController(IngredientsServiceImpl ingredientsService) {
         this.ingredientsService = ingredientsService;
@@ -90,7 +92,7 @@ public class IngredientController {
 
     @PutMapping("/{id}")
     @Operation(
-            summary = "aditing the ingredient",
+            summary = "editing the ingredient",
             description = "we can edit the ingredient use parameter id"
     )
     @ApiResponses(

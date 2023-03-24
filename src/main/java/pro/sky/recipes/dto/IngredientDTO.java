@@ -8,7 +8,6 @@ public class IngredientDTO {
     private final int count;
     private final String unitOfMeasurement;
     private final int id;
-    private static Ingredients ingredients;
 
     public IngredientDTO(int id, String name, int count, String unitOfMeasurement) {
         this.name = name;

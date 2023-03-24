@@ -7,19 +7,22 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Ingredients;
 import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.impl.RecipeServiceImpl;
+
 import java.util.List;
 
 
 @RestController
 @RequestMapping("/recipe")
-@Tag(name="Recipe", description = "The list of recipe")
+@NoArgsConstructor
+@Tag(name = "Recipe", description = "The list of recipe")
 public class RecipeController {
-    private final RecipeServiceImpl recipeService;
+    private RecipeServiceImpl recipeService;
 
     public RecipeController(RecipeServiceImpl recipeService) {
         this.recipeService = recipeService;
@@ -46,7 +49,6 @@ public class RecipeController {
         return recipeService.getRecipe(id);
     }
 
-    
 
     @GetMapping(value = "/allRecipes")
     @Operation(
@@ -65,8 +67,7 @@ public class RecipeController {
                     }
             )
     })
-
-    private List<RecipeDTO> getAllRecipe() {
+    public List<RecipeDTO> getAllRecipe() {
         return recipeService.getAllRecipe();
     }
 
@@ -128,6 +129,69 @@ public class RecipeController {
     )
     public void deleteRecipe(@PathVariable int id) {
         recipeService.deleteRecipe(id);
+    }
+
+    @GetMapping("/byIngredient{name}")
+    @Operation(
+            summary = "getting recipes by ingredient",
+            description = "we can get recipe use parameter name ingredient"
+    )
+    @ApiResponses(
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "The recipe received",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = RecipeController.class))
+                            )
+                    }
+            )
+    )
+    public List<RecipeDTO> getRecipeByIngredient(@PathVariable("name") String name) {
+        return recipeService.getRecipeByIngredient(name);
+    }
+
+    @GetMapping("/byIngredients")
+    @Operation(
+            summary = "Getting the recipe by some ingredients",
+            description = "We can get recipes by some parameters ingredients"
+    )
+    @ApiResponses(
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "The recipes received",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = RecipeController.class))
+                            )
+                    }
+            )
+    )
+    public List<RecipeDTO> getRecipeByIngredients(@RequestParam("name") List<String> names) {
+        return recipeService.getRecipeByIngredients(names);
+    }
+
+@GetMapping("/page/{pageNumber")
+@Operation(
+        summary = "Getting the page",
+        description = "We can get the page by page number"
+)
+@ApiResponses(
+        @ApiResponse(
+                responseCode = "200",
+                description = "The page received",
+                content = {
+                        @Content(
+                                mediaType = "application/json",
+                                array = @ArraySchema(schema = @Schema(implementation = RecipeController.class))
+                        )
+                }
+        )
+)
+    public List<RecipeDTO> getPage(@PathVariable("pageNumber") int pageNumber) {
+    return recipeService.getPage(pageNumber);
     }
 }
 

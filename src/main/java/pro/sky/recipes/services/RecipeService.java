@@ -17,4 +17,10 @@ public interface RecipeService {
     boolean deleteRecipe(int id);
 
     List<RecipeDTO> getAllRecipe();
+
+    List<RecipeDTO> getRecipeByIngredient(String ingredientName);
+
+    List<RecipeDTO> getRecipeByIngredients(List<String> ingredientsList);
+
+    List<RecipeDTO> getPage(int pageNumber);
 }

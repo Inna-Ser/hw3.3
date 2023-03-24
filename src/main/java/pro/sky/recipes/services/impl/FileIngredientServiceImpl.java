@@ -12,7 +12,7 @@ import java.nio.file.Path;
 public class FileIngredientServiceImpl implements FileService {
     @Value("${path.to.date.file}")
     private String dataFilePath;
-    @Value("${name.to.date.file}")
+    @Value("${name.to.date.file1}")
     private String dataFileName;
 
     @Override

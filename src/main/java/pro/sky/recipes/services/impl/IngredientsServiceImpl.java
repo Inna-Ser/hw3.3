@@ -37,6 +37,7 @@ public class IngredientsServiceImpl implements IngredientsService {
             return null;
         } else {
             ingredientsMap.put(id, ingredients);
+            saveToFile();
             return IngredientDTO.from(id, ingredients);
         }
     }
@@ -57,6 +58,7 @@ public class IngredientsServiceImpl implements IngredientsService {
             return null;
         } else {
             ingredientsMap.put(id, ingredients);
+            saveToFile();
             return IngredientDTO.from(id, ingredients);
         }
     }
@@ -67,6 +69,7 @@ public class IngredientsServiceImpl implements IngredientsService {
             return false;
         } else {
             ingredientsMap.remove(id);
+            saveToFile();
             return true;
         }
     }

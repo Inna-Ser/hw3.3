@@ -12,6 +12,8 @@ import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.RecipeService;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,7 +24,8 @@ public class RecipeServiceImpl implements RecipeService {
     private int idGeneration = 1;
     private final int id = idGeneration++;
     private final IngredientsServiceImpl ingredientsService;
-    private Map<Integer, Recipe> recipeMap = new TreeMap<>();
+    private TreeMap<Integer, Recipe> recipeMap = new TreeMap<>();
+
 
     public RecipeServiceImpl(FileRecipeServiceImpl fileService, IngredientsServiceImpl ingredientsService) {
         this.fileService = fileService;
@@ -36,7 +39,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public RecipeDTO addRecipe(Recipe recipe) {
-        if (StringUtils.isBlank("")) {
+        if (StringUtils.isBlank(recipe.getName())) {
             return null;
         } else {
             recipeMap.put(idGeneration, recipe);
@@ -73,6 +76,7 @@ public class RecipeServiceImpl implements RecipeService {
     public boolean deleteRecipe(int id) {
         if (recipeMap.containsKey(id)) {
             recipeMap.remove(id);
+            saveToFile();
             return true;
         }
         return false;
@@ -103,6 +107,9 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeDTO> getRecipeByIngredients(List<String> ingredientsList) {
+        ingredientsList.stream();
+//                .map(Integer::parseInt)
+//                .map(this.ingredientsService::getIngredient);
 //        List<IngredientDTO> ingredients = ingredientsList.stream()
 //                .map(this.ingredientsService::getIngredient)
 //                .filter(Objects::nonNull)
@@ -149,4 +156,6 @@ public class RecipeServiceImpl implements RecipeService {
             throw new RuntimeException(e);
         }
     }
+
+
 }

@@ -23,4 +23,8 @@ public interface RecipeService {
     List<RecipeDTO> getRecipeByIngredients(List<String> ingredientsList);
 
     List<RecipeDTO> getPage(int pageNumber);
+
+    void saveToFile();
+
+    void readFromFile();
 }

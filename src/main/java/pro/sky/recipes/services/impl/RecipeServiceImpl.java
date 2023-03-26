@@ -12,22 +12,20 @@ import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.RecipeService;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
-    private final FileRecipeServiceImpl fileService;
+    private final FileServiceImpl fileService;
     private int idGeneration = 1;
     private final int id = idGeneration++;
     private final IngredientsServiceImpl ingredientsService;
     private TreeMap<Integer, Recipe> recipeMap = new TreeMap<>();
 
 
-    public RecipeServiceImpl(FileRecipeServiceImpl fileService, IngredientsServiceImpl ingredientsService) {
+    public RecipeServiceImpl(FileServiceImpl fileService, IngredientsServiceImpl ingredientsService) {
         this.fileService = fileService;
         this.ingredientsService = ingredientsService;
     }
@@ -107,55 +105,44 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeDTO> getRecipeByIngredients(List<String> ingredientsList) {
-        ingredientsList.stream();
-//                .map(Integer::parseInt)
-//                .map(this.ingredientsService::getIngredient);
-//        List<IngredientDTO> ingredients = ingredientsList.stream()
-//                .map(this.ingredientsService::getIngredient)
-//                .filter(Objects::nonNull)
-//                .collect(Collectors.toList());
-//        return this.recipeMap.entrySet()
-//                .stream()
-//                .filter(e -> {
-//                    Set<String> recipeIngredientsName = e.getValue()
-//                            .getIngredients()
-//                            .stream()
-//                            .map(i -> i.getName())
-//                            .collect(Collectors.toSet());
-//                    return new HashSet<>(recipeIngredientsName).containsAll(ingredientsList);
-//                })
-//                .map(e -> RecipeDTO.from(e.getKey(), e.getValue()))
-//                .collect(Collectors.toList());
-        return null;
-    }
-
-    @Override
-    public List<RecipeDTO> getPage(int pageNumber) {
-        return this.getAllRecipe()
+        return recipeMap.entrySet()
                 .stream()
-                .skip(pageNumber = 1 * 10)
-                .limit(10)
+                .filter(e -> {
+                    var names = e.getValue().getIngredients().stream().map(Ingredients::getName)
+                            .collect(Collectors.toList());
+                    return names.containsAll(ingredientsList);
+                })
+                .map(e -> RecipeDTO.from(e.getKey(), e.getValue()))
                 .collect(Collectors.toList());
     }
 
-    private void saveToFile() {
-        try {
-            String json = new ObjectMapper().writeValueAsString(recipeMap);
-            fileService.saveToFile(json);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            @Override
+            public List<RecipeDTO> getPage ( int pageNumber){
+                return this.getAllRecipe()
+                        .stream()
+                        .skip(pageNumber = 1 * 10)
+                        .limit(10)
+                        .collect(Collectors.toList());
+            }
+
+            @Override
+            public void saveToFile () {
+                try {
+                    String json = new ObjectMapper().writeValueAsString(recipeMap);
+                    fileService.saveToFile(json);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void readFromFile () {
+                try {
+                    String json = fileService.readFromFile();
+                    recipeMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Recipe>>() {
+                    });
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
-    }
-
-    private void readFromFile() {
-        try {
-            String json = fileService.readFromFile();
-            recipeMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Recipe>>() {
-            });
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-}

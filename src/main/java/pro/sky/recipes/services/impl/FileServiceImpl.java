@@ -27,6 +27,11 @@ public class FileServiceImpl implements FileService {
 //        this.fileService = fileService;
 //    }
 
+    public FileServiceImpl(String dataFilePath, String dataFileName) {
+        this.dataFilePath = dataFilePath;
+        this.dataFileName = dataFileName;
+    }
+
     @Override
     public boolean saveToFile(String json) {
         try {

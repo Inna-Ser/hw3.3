@@ -2,6 +2,7 @@ package pro.sky.recipes.services.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.RecipeService;
 
 import javax.annotation.PostConstruct;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -116,33 +118,43 @@ public class RecipeServiceImpl implements RecipeService {
                 .collect(Collectors.toList());
     }
 
-            @Override
-            public List<RecipeDTO> getPage ( int pageNumber){
-                return this.getAllRecipe()
-                        .stream()
-                        .skip(pageNumber = 1 * 10)
-                        .limit(10)
-                        .collect(Collectors.toList());
-            }
+    @Override
+    public List<RecipeDTO> getPage(int pageNumber) {
+        return this.getAllRecipe()
+                .stream()
+                .skip(pageNumber = 1 * 10)
+                .limit(10)
+                .collect(Collectors.toList());
+    }
 
-            @Override
-            public void saveToFile () {
-                try {
-                    String json = new ObjectMapper().writeValueAsString(recipeMap);
-                    fileService.saveToFile(json);
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+//    public Path createRecipeReport(RecipeDTO recipeDTO) {
+//        LinkedHashMap<Integer, RecipeDTO> allRecipe = recipeDTO.getOrDefault
+//    }
 
-            @Override
-            public void readFromFile () {
-                try {
-                    String json = fileService.readFromFile();
-                    recipeMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Recipe>>() {
-                    });
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+    @Override
+    public void saveToFile() {
+        try {
+            String json = new ObjectMapper().writeValueAsString(recipeMap);
+            fileService.saveToFile(json);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void readFromFile() {
+        try {
+            String json = fileService.readFromFile();
+            if (json == null || json.isBlank()) {
+                recipeMap = new TreeMap<Integer, Recipe>();
+            } else {
+                recipeMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Recipe>>() {
+                });
+            }
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}

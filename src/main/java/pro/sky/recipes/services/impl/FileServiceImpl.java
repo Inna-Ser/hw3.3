@@ -21,11 +21,11 @@ public class FileServiceImpl implements FileService {
     private String dataFilePath;
     @Value("${name.to.date.file}")
     private String dataFileName;
-    private final FileService fileService;
+//    private final FileService fileService;
 
-    public FileServiceImpl(FileService fileService) {
-        this.fileService = fileService;
-    }
+//    public FileServiceImpl(FileService fileService) {
+//        this.fileService = fileService;
+//    }
 
     @Override
     public boolean saveToFile(String json) {

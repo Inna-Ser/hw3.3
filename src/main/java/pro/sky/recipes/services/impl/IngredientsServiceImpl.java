@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.recipes.dto.IngredientDTO;
 import pro.sky.recipes.model.Ingredients;
+import pro.sky.recipes.services.FileService;
 import pro.sky.recipes.services.IngredientsService;
 
 import javax.annotation.PostConstruct;
@@ -17,13 +18,15 @@ import java.util.TreeMap;
 
 @Service
 public class IngredientsServiceImpl implements IngredientsService {
-    private final FileIngredientServiceImpl fileService;
+    private final FileService fileService;
     private int idGeneration = 1;
     private final int id = idGeneration++;
     private TreeMap<Integer, Ingredients> ingredientsMap = new TreeMap<>();
 
-    public IngredientsServiceImpl(FileIngredientServiceImpl fileService) {
+    public IngredientsServiceImpl(FileService fileService, int idGeneration, TreeMap<Integer, Ingredients> ingredientsMap) {
         this.fileService = fileService;
+        this.idGeneration = idGeneration;
+        this.ingredientsMap = ingredientsMap;
     }
 
     @PostConstruct

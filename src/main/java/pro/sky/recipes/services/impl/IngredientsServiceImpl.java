@@ -98,8 +98,12 @@ public class IngredientsServiceImpl implements IngredientsService {
     private void readFromFile() {
         try {
             String json = fileService.readFromFile();
-            ingredientsMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Ingredients>>() {
-            });
+            if (json == null || json.isBlank()) {
+                ingredientsMap = new TreeMap<>();
+            } else {
+                ingredientsMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Ingredients>>() {
+                });
+            }
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

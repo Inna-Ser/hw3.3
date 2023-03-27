@@ -8,7 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pro.sky.recipes.services.FileService;
+import pro.sky.recipes.services.impl.FileIngredientServiceImpl;
+import pro.sky.recipes.services.impl.FileServiceImpl;
 
 import java.io.*;
 
@@ -16,10 +17,12 @@ import java.io.*;
 @RequestMapping("/files")
 public class FileController {
 
-    private final FileService fileService;
+    private final FileServiceImpl fileService;
+    private final FileIngredientServiceImpl fileIngredientService;
 
-    public FileController(FileService fileService) {
+    public FileController(FileServiceImpl fileService, FileIngredientServiceImpl fileIngredientService) {
         this.fileService = fileService;
+        this.fileIngredientService = fileIngredientService;
     }
 
     @GetMapping(value = "/export", produces = MediaType.APPLICATION_JSON_VALUE)

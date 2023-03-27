@@ -173,25 +173,25 @@ public class RecipeController {
         return recipeService.getRecipeByIngredients(names);
     }
 
-@GetMapping("/page/{pageNumber")
-@Operation(
-        summary = "Getting the page",
-        description = "We can get the page by page number"
-)
-@ApiResponses(
-        @ApiResponse(
-                responseCode = "200",
-                description = "The page received",
-                content = {
-                        @Content(
-                                mediaType = "application/json",
-                                array = @ArraySchema(schema = @Schema(implementation = RecipeController.class))
-                        )
-                }
-        )
-)
+    @GetMapping("/page/{pageNumber}")
+    @Operation(
+            summary = "Getting the page",
+            description = "We can get the page by page number"
+    )
+    @ApiResponses(
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "The page received",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = RecipeController.class))
+                            )
+                    }
+            )
+    )
     public List<RecipeDTO> getPage(@PathVariable("pageNumber") int pageNumber) {
-    return recipeService.getPage(pageNumber);
+        return recipeService.getPage(pageNumber);
     }
 }
 

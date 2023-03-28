@@ -18,15 +18,22 @@ import java.util.TreeMap;
 
 @Service
 public class IngredientsServiceImpl implements IngredientsService {
+    private final IngredientsServiceImpl ingredientsService;
     private final FileService fileService;
     private int idGeneration = 1;
     private final int id = idGeneration++;
     private TreeMap<Integer, Ingredients> ingredientsMap = new TreeMap<>();
 
-    public IngredientsServiceImpl(FileService fileService, int idGeneration, TreeMap<Integer, Ingredients> ingredientsMap) {
+    public IngredientsServiceImpl(IngredientsServiceImpl ingredientsService, FileService fileService, int idGeneration, TreeMap<Integer, Ingredients> ingredientsMap) {
+        this.ingredientsService = ingredientsService;
         this.fileService = fileService;
         this.idGeneration = idGeneration;
         this.ingredientsMap = ingredientsMap;
+    }
+
+    public IngredientsServiceImpl(IngredientsServiceImpl ingredientsService, FileIngredientServiceImpl fileService) {
+        this.ingredientsService = ingredientsService;
+        this.fileService = fileService;
     }
 
     @PostConstruct

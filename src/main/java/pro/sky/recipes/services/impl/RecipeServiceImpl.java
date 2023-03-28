@@ -13,13 +13,13 @@ import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.RecipeService;
 
 import javax.annotation.PostConstruct;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
+    private final RecipeServiceImpl recipeService;
     private final FileServiceImpl fileService;
     private int idGeneration = 1;
     private final int id = idGeneration++;
@@ -27,7 +27,8 @@ public class RecipeServiceImpl implements RecipeService {
     private TreeMap<Integer, Recipe> recipeMap = new TreeMap<>();
 
 
-    public RecipeServiceImpl(FileServiceImpl fileService, IngredientsServiceImpl ingredientsService) {
+    public RecipeServiceImpl(RecipeServiceImpl recipeService, FileServiceImpl fileService, IngredientsServiceImpl ingredientsService) {
+        this.recipeService = recipeService;
         this.fileService = fileService;
         this.ingredientsService = ingredientsService;
     }

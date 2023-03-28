@@ -27,7 +27,8 @@ public class FileServiceImpl implements FileService {
 //        this.fileService = fileService;
 //    }
 
-    public FileServiceImpl(String dataFilePath, String dataFileName) {
+    public FileServiceImpl(@Value("${path.to.date.file}") String dataFilePath,
+                           @Value("${name.to.date.file}") String dataFileName) {
         this.dataFilePath = dataFilePath;
         this.dataFileName = dataFileName;
     }

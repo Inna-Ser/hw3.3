@@ -18,11 +18,9 @@ import java.util.List;
 public class RecipeServiceController {
 
     private final RecipeServiceImpl recipeService;
-    private final RecipeServiceController recipeServiceController;
 
-    public RecipeServiceController(RecipeServiceImpl recipeService, RecipeServiceController recipeServiceController) {
+    public RecipeServiceController(RecipeServiceImpl recipeService) {
         this.recipeService = recipeService;
-        this.recipeServiceController = recipeServiceController;
     }
 
     @GetMapping("/{id}")

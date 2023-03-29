@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pro.sky.recipes.services.impl.FileIngredientServiceImpl;
 import pro.sky.recipes.services.impl.FileServiceImpl;
 
 import java.io.*;

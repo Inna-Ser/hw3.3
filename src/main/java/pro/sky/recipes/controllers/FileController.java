@@ -14,7 +14,7 @@ import pro.sky.recipes.services.impl.FileRecipeImpl;
 import java.io.*;
 
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/file")
 public class FileController {
 
     private final FileRecipeImpl recipeFileService;
@@ -40,11 +40,25 @@ public class FileController {
         }
     }
 
-    @PostMapping(value = "/ingredient/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> uploadDateFile(@RequestParam MultipartFile file) {
+    @PostMapping(value = "/ingredients/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> uploadDateFileIngredient(@RequestParam MultipartFile file) {
         // Аналогично нужно сделать для импорта рецептов. Нужно использовать recipeFileService
         ingredientFileService.cleanDateFile();
         File dateFile = ingredientFileService.getDataFile();
+        try {
+            FileOutputStream fos = new FileOutputStream(dateFile);
+            IOUtils.copy(file.getInputStream(), fos);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @PostMapping(value = "/recipe/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> uploadDateFileRecipe(@RequestParam MultipartFile file) {
+        recipeFileService.cleanDateFile();
+        File dateFile = recipeFileService.getDataFile();
         try {
             FileOutputStream fos = new FileOutputStream(dateFile);
             IOUtils.copy(file.getInputStream(), fos);

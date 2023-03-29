@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Service
-public class FileIngredientServiceImpl implements FileService {
+public class FileIngredientImpl implements FileService {
     @Value("${path.to.date.file}")
     private String dataFilePath;
     @Value("${name.to.date.file1}")
@@ -53,12 +53,16 @@ public class FileIngredientServiceImpl implements FileService {
 
     @Override
     public Path creatTempFile(String suffix) {
-        return null;
+        try {
+            return Files.createTempFile(Path.of(dataFilePath), "ing_tmp_file", suffix);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public File getDataFile() {
-        return null;
+        return new File(dataFilePath + "/" + dataFileName);
     }
 }
 

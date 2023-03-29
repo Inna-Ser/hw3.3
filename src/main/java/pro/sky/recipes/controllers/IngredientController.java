@@ -13,11 +13,13 @@ import pro.sky.recipes.services.impl.IngredientsServiceImpl;
 
 import java.util.List;
 
-public class IngredientServiceController {
+@RestController
+@RequestMapping("/ingredient")
+public class IngredientController {
 
     private final IngredientsServiceImpl ingredientsService;
 
-    public IngredientServiceController(IngredientsServiceImpl ingredientsService) {
+    public IngredientController(IngredientsServiceImpl ingredientsService) {
         this.ingredientsService = ingredientsService;
     }
 

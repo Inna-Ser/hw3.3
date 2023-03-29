@@ -10,6 +10,7 @@ import pro.sky.recipes.dto.IngredientDTO;
 import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Ingredients;
 import pro.sky.recipes.model.Recipe;
+import pro.sky.recipes.services.FileService;
 import pro.sky.recipes.services.RecipeService;
 
 import javax.annotation.PostConstruct;
@@ -19,16 +20,12 @@ import java.util.stream.Collectors;
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
-    private final RecipeServiceImpl recipeService;
-    private final FileServiceImpl fileService;
-    private int idGeneration = 1;
-    private final int id = idGeneration++;
+    private final FileService fileService;
     private final IngredientsServiceImpl ingredientsService;
     private TreeMap<Integer, Recipe> recipeMap = new TreeMap<>();
+    private int idGeneration = 1;
 
-
-    public RecipeServiceImpl(RecipeServiceImpl recipeService, FileServiceImpl fileService, IngredientsServiceImpl ingredientsService) {
-        this.recipeService = recipeService;
+    public RecipeServiceImpl(FileRecipeImpl fileService, IngredientsServiceImpl ingredientsService) {
         this.fileService = fileService;
         this.ingredientsService = ingredientsService;
     }
@@ -43,11 +40,9 @@ public class RecipeServiceImpl implements RecipeService {
         if (StringUtils.isBlank(recipe.getName())) {
             return null;
         } else {
-            recipeMap.put(idGeneration, recipe);
-            for (Ingredients ingredients : recipe.getIngredients()) {
-                this.ingredientsService.addIngredient(ingredients);
-                saveToFile();
-            }
+            int id = idGeneration++;
+            recipeMap.put(id, recipe);
+            saveToFile();
             return RecipeDTO.from(id, recipe);
         }
     }

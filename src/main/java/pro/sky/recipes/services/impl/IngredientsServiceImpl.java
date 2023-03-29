@@ -18,21 +18,13 @@ import java.util.TreeMap;
 
 @Service
 public class IngredientsServiceImpl implements IngredientsService {
-    private final IngredientsServiceImpl ingredientsService;
+
+
     private final FileService fileService;
     private int idGeneration = 1;
-    private final int id = idGeneration++;
     private TreeMap<Integer, Ingredients> ingredientsMap = new TreeMap<>();
 
-    public IngredientsServiceImpl(IngredientsServiceImpl ingredientsService, FileService fileService, int idGeneration, TreeMap<Integer, Ingredients> ingredientsMap) {
-        this.ingredientsService = ingredientsService;
-        this.fileService = fileService;
-        this.idGeneration = idGeneration;
-        this.ingredientsMap = ingredientsMap;
-    }
-
-    public IngredientsServiceImpl(IngredientsServiceImpl ingredientsService, FileIngredientServiceImpl fileService) {
-        this.ingredientsService = ingredientsService;
+    public IngredientsServiceImpl(FileIngredientImpl fileService) {
         this.fileService = fileService;
     }
 
@@ -43,9 +35,10 @@ public class IngredientsServiceImpl implements IngredientsService {
 
     @Override
     public IngredientDTO addIngredient(Ingredients ingredients) {
-        if (StringUtils.isBlank("")) {
+        if (StringUtils.isBlank(ingredients.getName())) {
             return null;
         } else {
+            int id = idGeneration++;
             ingredientsMap.put(id, ingredients);
             saveToFile();
             return IngredientDTO.from(id, ingredients);
@@ -54,17 +47,16 @@ public class IngredientsServiceImpl implements IngredientsService {
 
     @Override
     public IngredientDTO getIngredient(int id) {
-        if (StringUtils.isBlank("")) {
+        var ingredient = ingredientsMap.get(id);
+        if (ingredient == null) {
             return null;
-        } else {
-            Ingredients ingredients = ingredientsMap.get(id);
-            return IngredientDTO.from(id, ingredients);
         }
+        return IngredientDTO.from(id, ingredient);
     }
 
     @Override
     public IngredientDTO editIngredient(int id, Ingredients ingredients) {
-        if (StringUtils.isBlank("")) {
+        if (StringUtils.isBlank(ingredients.getName())) {
             return null;
         } else {
             ingredientsMap.put(id, ingredients);
@@ -75,13 +67,12 @@ public class IngredientsServiceImpl implements IngredientsService {
 
     @Override
     public boolean deleteIngredient(int id) {
-        if (StringUtils.isBlank("")) {
-            return false;
-        } else {
+        if (ingredientsMap.containsKey(id)) {
             ingredientsMap.remove(id);
             saveToFile();
             return true;
         }
+        return false;
     }
 
     @Override

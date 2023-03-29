@@ -8,8 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pro.sky.recipes.services.impl.FileIngredientServiceImpl;
-import pro.sky.recipes.services.impl.FileServiceImpl;
+import pro.sky.recipes.services.impl.FileIngredientImpl;
+import pro.sky.recipes.services.impl.FileRecipeImpl;
 
 import java.io.*;
 
@@ -17,15 +17,18 @@ import java.io.*;
 @RequestMapping("/files")
 public class FileController {
 
-    private final FileServiceImpl fileService;
+    private final FileRecipeImpl recipeFileService;
+    private final FileIngredientImpl ingredientFileService;
 
-    public FileController(FileServiceImpl fileService) {
-        this.fileService = fileService;
+    public FileController(FileRecipeImpl recipeFileService, FileIngredientImpl ingredientFileService) {
+        this.recipeFileService = recipeFileService;
+        this.ingredientFileService = ingredientFileService;
     }
+
 
     @GetMapping(value = "/export", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InputStreamResource> downloadDateFile() throws FileNotFoundException {
-        File file = fileService.getDataFile();
+        File file = recipeFileService.getDataFile();
         if (file.exists()) {
             InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
             return ResponseEntity.ok()
@@ -37,11 +40,11 @@ public class FileController {
         }
     }
 
-    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/ingredient/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> uploadDateFile(@RequestParam MultipartFile file) {
-        fileService.cleanDateFile();
-        File dateFile = fileService.getDataFile();
-
+        // Аналогично нужно сделать для импорта рецептов. Нужно использовать recipeFileService
+        ingredientFileService.cleanDateFile();
+        File dateFile = ingredientFileService.getDataFile();
         try {
             FileOutputStream fos = new FileOutputStream(dateFile);
             IOUtils.copy(file.getInputStream(), fos);

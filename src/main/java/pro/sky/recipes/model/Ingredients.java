@@ -12,6 +12,5 @@ public class Ingredients {
     private String name;
     private int count;
     private String unitOfMeasurement;
-    private TreeMap<Integer, Ingredients> ingredientsMap;
 
 }

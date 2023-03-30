@@ -106,7 +106,7 @@ public class IngredientController {
         return ingredientsService.editIngredient(id, ingredients);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/ingredient/id")
     @Operation(
             summary = "deleting the ingredient",
             description = "we can delete the ingredient use parameter id"

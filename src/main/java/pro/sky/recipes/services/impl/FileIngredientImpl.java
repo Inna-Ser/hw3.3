@@ -1,5 +1,6 @@
 package pro.sky.recipes.services.impl;
 
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pro.sky.recipes.services.FileService;
@@ -10,8 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Service
+@NoArgsConstructor
 public class FileIngredientImpl implements FileService {
-    @Value("${path.to.date.file.ingredient}")
+    @Value("${path.to.date.file}")
     private String dataFilePath;
     @Value("${name.to.date.file.ingredient}")
     private String dataFileName;

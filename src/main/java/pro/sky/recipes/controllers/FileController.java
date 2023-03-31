@@ -17,8 +17,11 @@ import java.io.*;
 @RequestMapping("/files")
 public class FileController {
 
-    private final FileRecipeImpl recipeFileService;
-    private final FileIngredientImpl ingredientFileService;
+    private FileRecipeImpl recipeFileService;
+    private FileIngredientImpl ingredientFileService;
+
+    public FileController() {
+    }
 
     public FileController(FileRecipeImpl recipeFileService, FileIngredientImpl ingredientFileService) {
         this.recipeFileService = recipeFileService;

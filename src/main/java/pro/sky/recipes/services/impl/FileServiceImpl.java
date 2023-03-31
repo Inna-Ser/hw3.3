@@ -1,10 +1,12 @@
 package pro.sky.recipes.services.impl;
 
+import org.springframework.stereotype.Service;
 import pro.sky.recipes.services.FileService;
 
 import java.io.File;
 import java.nio.file.Path;
 
+ @Service
 public class FileServiceImpl implements FileService {
     @Override
     public boolean saveToFile(String json) {

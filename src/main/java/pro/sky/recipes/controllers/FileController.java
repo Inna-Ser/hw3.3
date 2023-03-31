@@ -45,7 +45,6 @@ public class FileController {
 
     @PostMapping(value = "/ingredient/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> uploadDateFileIngredient(@RequestParam MultipartFile file) {
-        // Аналогично нужно сделать для импорта рецептов. Нужно использовать recipeFileService
         ingredientFileService.cleanDateFile();
         File dateFile = ingredientFileService.getDataFile();
         try {

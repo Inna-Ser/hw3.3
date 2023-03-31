@@ -11,15 +11,10 @@ import java.nio.file.Path;
 
 @Service
 public class FileIngredientImpl implements FileService {
-    @Value("${path.to.date.file}")
+    @Value("${path.to.date.file.ingredient}")
     private String dataFilePath;
-    @Value("${name.to.date.file}")
+    @Value("${name.to.date.file.ingredient}")
     private String dataFileName;
-
-    public FileIngredientImpl(String dataFilePath, String dataFileName) {
-        this.dataFilePath = dataFilePath;
-        this.dataFileName = dataFileName;
-    }
 
     @Override
     public boolean saveToFile(String json) {

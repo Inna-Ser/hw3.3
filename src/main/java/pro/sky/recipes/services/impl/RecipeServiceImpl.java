@@ -89,16 +89,17 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeDTO> getRecipeByIngredient(String ingredientName) {
-        IngredientDTO ingredients = this.ingredientsService.getIngredient(Integer.parseInt(ingredientName));
-        if (StringUtils.isBlank("")) {
-            return null;
-        } else {
-            return this.recipeMap.entrySet().stream()
-                    .filter(e -> e.getValue().getIngredients().stream()
-                            .anyMatch(i -> i.getName().equals(ingredients.getName())))
-                    .map(e -> RecipeDTO.from(e.getKey(), e.getValue()))
-                    .collect(Collectors.toList());
-        }
+//        IngredientDTO ingredients = this.ingredientsService.getIngredient(Integer.parseInt(ingredientName));
+//        if (StringUtils.isBlank("")) {
+//            return null;
+//        } else {
+//            return this.recipeMap.entrySet().stream()
+//                    .filter(e -> e.getValue().getIngredients().stream()
+//                            .anyMatch(i -> i.getName().equals(ingredients.getName())))
+//                    .map(e -> RecipeDTO.from(e.getKey(), e.getValue()))
+//                    .collect(Collectors.toList());
+//        }
+        return null;
     }
 
     @Override

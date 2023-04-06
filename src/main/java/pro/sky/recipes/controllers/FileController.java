@@ -90,7 +90,7 @@ public class FileController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @PostMapping(value = "/recipe/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/recipe/import", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "upload recipe file",
             description = "we have to select a file to upload"

@@ -14,14 +14,9 @@ import pro.sky.recipes.services.FileService;
 import pro.sky.recipes.services.RecipeService;
 
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import Reader
 
 
 @Service
@@ -109,6 +104,24 @@ public class RecipeServiceImpl implements RecipeService {
         return null;
     }
 
+    public void addRecipeStringFormat(PrintWriter writer) throws IOException{
+        for (Recipe recipe : this.recipeMap.values()) {
+            writer.println(recipe.getName());
+            writer.println("The cooking time: " + recipe.getCookingTime());
+            writer.println("The ingredients: ");
+            for (Ingredients ingredients : recipe.getIngredients()) {
+                writer.println("\t" + idGeneration + ingredients.getName() +
+                        "Count:" + ingredients.getCount() +
+                        "Measure: " + ingredients.getUnitOfMeasurement());
+            }
+            writer.println("The instruction");
+            for (String recipe1 : recipe.getInstruction()) {
+                writer.println(recipe.getInstruction());
+            }
+        }
+        writer.flush();
+    }
+
     @Override
     public List<RecipeDTO> getRecipeByIngredients(List<String> ingredientsList) {
         return recipeMap.entrySet()
@@ -129,18 +142,6 @@ public class RecipeServiceImpl implements RecipeService {
                 .skip(pageNumber = 1 * 10)
                 .limit(10)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void addRecipeFromInputStream(InputStream inputStream) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] array = StringUtils.split(line, '|');
-                Recipe recipe = new Recipe(RecipeDTO.from(int, recipe));
-                addRecipe(recipe);
-            }
-        }
     }
 
     @Override

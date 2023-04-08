@@ -17,6 +17,7 @@ import pro.sky.recipes.services.impl.RecipeServiceImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.List;
 
 @RestController
@@ -71,6 +72,15 @@ public class RecipeController {
     })
     public List<RecipeDTO> getAllRecipe() {
         return recipeService.getAllRecipe();
+    }
+
+    @GetMapping("/recipe")
+    public void addRecipeStringFormat(@PathVariable PrintWriter writer) {
+        try {
+            recipeService.addRecipeStringFormat(writer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PostMapping
@@ -194,16 +204,5 @@ public class RecipeController {
     )
     public List<RecipeDTO> getPage(@PathVariable("pageNumber") int pageNumber) {
         return recipeService.getPage(pageNumber);
-    }
-
-    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> addRecipeFromFile(@RequestParam MultipartFile file) {
-        try (InputStream stream = file.getInputStream()) {
-            recipeService.addRecipeFromInputStream(stream);
-            return ResponseEntity.ok().build();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
     }
 }

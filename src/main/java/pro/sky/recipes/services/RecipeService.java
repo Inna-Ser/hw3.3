@@ -26,8 +26,6 @@ public interface RecipeService {
 
     List<RecipeDTO> getPage(int pageNumber);
 
-    void addRecipeFromInputStream(InputStream inputStream) throws IOException;
-
     void saveToFile();
 
     void readFromFile();

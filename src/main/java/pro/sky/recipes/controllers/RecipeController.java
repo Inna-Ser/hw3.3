@@ -6,12 +6,17 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.impl.RecipeServiceImpl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -189,5 +194,16 @@ public class RecipeController {
     )
     public List<RecipeDTO> getPage(@PathVariable("pageNumber") int pageNumber) {
         return recipeService.getPage(pageNumber);
+    }
+
+    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> addRecipeFromFile(@RequestParam MultipartFile file) {
+        try (InputStream stream = file.getInputStream()) {
+            recipeService.addRecipeFromInputStream(stream);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

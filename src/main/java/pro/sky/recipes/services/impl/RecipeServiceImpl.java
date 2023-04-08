@@ -2,8 +2,8 @@ package pro.sky.recipes.services.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.jfr.Category;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.recipes.dto.IngredientDTO;
@@ -14,8 +14,15 @@ import pro.sky.recipes.services.FileService;
 import pro.sky.recipes.services.RecipeService;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import Reader
+
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -124,9 +131,17 @@ public class RecipeServiceImpl implements RecipeService {
                 .collect(Collectors.toList());
     }
 
-//    public Path createRecipeReport(RecipeDTO recipeDTO) {
-//        LinkedHashMap<Integer, RecipeDTO> allRecipe = recipeDTO.getOrDefault
-//    }
+    @Override
+    public void addRecipeFromInputStream(InputStream inputStream) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] array = StringUtils.split(line, '|');
+                Recipe recipe = new Recipe(RecipeDTO.from(int, recipe));
+                addRecipe(recipe);
+            }
+        }
+    }
 
     @Override
     public void saveToFile() {

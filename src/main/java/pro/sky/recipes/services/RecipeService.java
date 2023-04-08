@@ -3,6 +3,8 @@ package pro.sky.recipes.services;
 import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Recipe;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 
@@ -23,6 +25,8 @@ public interface RecipeService {
     List<RecipeDTO> getRecipeByIngredients(List<String> ingredientsList);
 
     List<RecipeDTO> getPage(int pageNumber);
+
+    void addRecipeFromInputStream(InputStream inputStream) throws IOException;
 
     void saveToFile();
 

@@ -6,15 +6,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pro.sky.recipes.services.impl.FileIngredientImpl;
 import pro.sky.recipes.services.impl.FileRecipeImpl;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 @RestController

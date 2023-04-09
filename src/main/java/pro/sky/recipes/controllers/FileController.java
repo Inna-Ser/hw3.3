@@ -132,7 +132,19 @@ public class FileController {
                                     mediaType = "application/txt"
                             )
                     }
-            )
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "we have an error in the query parameters"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "URL incorrect or there is no such action by the web application"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "an error occurred on the server during the execution of the request"
+            ),
     })
     public void downloadRecipes(HttpServletResponse response) throws IOException {
         ContentDisposition disposition = ContentDisposition.attachment()

@@ -1,32 +1,110 @@
 package pro.sky.recipes.services.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.recipes.dto.IngredientDTO;
 import pro.sky.recipes.model.Ingredients;
+import pro.sky.recipes.services.FileService;
 import pro.sky.recipes.services.IngredientsService;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 @Service
 public class IngredientsServiceImpl implements IngredientsService {
+
+
+    private final FileService fileService;
     private int idGeneration = 1;
-    private int id = idGeneration++;
-    private final Map<Integer, Ingredients> ingredientsMap = new TreeMap<Integer, Ingredients>();
+    private TreeMap<Integer, Ingredients> ingredientsMap = new TreeMap<>();
+
+    public IngredientsServiceImpl(FileIngredientImpl fileService) {
+        this.fileService = fileService;
+    }
+
+    @PostConstruct
+    private void unit() {
+        readFromFile();
+    }
 
     @Override
     public IngredientDTO addIngredient(Ingredients ingredients) {
-        ingredientsMap.put(id, ingredients);
-        return IngredientDTO.from(id, ingredients);
+        if (StringUtils.isBlank(ingredients.getName())) {
+            return null;
+        } else {
+            int id = idGeneration++;
+            ingredientsMap.put(id, ingredients);
+            saveToFile();
+            return IngredientDTO.from(id, ingredients);
+        }
     }
 
     @Override
     public IngredientDTO getIngredient(int id) {
-        if (ingredientsMap != null || !ingredientsMap.isEmpty()) {
-            Ingredients ingredients = ingredientsMap.get(id);
-            return IngredientDTO.from(id, ingredients);
-        } else {
+        var ingredient = ingredientsMap.get(id);
+        if (ingredient == null) {
             return null;
+        }
+        return IngredientDTO.from(id, ingredient);
+    }
+
+    @Override
+    public IngredientDTO editIngredient(int id, Ingredients ingredients) {
+        if (StringUtils.isBlank(ingredients.getName())) {
+            return null;
+        } else {
+            ingredientsMap.put(id, ingredients);
+            saveToFile();
+            return IngredientDTO.from(id, ingredients);
+        }
+    }
+
+    @Override
+    public boolean deleteIngredient(int id) {
+        if (ingredientsMap.containsKey(id)) {
+            ingredientsMap.remove(id);
+            saveToFile();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<IngredientDTO> getAllIngredient() {
+        List<IngredientDTO> ingredientDTOList = new ArrayList<>();
+        for (Map.Entry<Integer, Ingredients> entry : ingredientsMap.entrySet()) {
+            ingredientDTOList.add(IngredientDTO.from(entry.getKey(), entry.getValue()));
+        }
+        return ingredientDTOList;
+    }
+
+    private void saveToFile() {
+        try {
+            String json = new ObjectMapper().writeValueAsString(ingredientsMap);
+            fileService.saveToFile(json);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void readFromFile() {
+        try {
+            String json = fileService.readFromFile();
+            if (json == null || json.isBlank()) {
+                ingredientsMap = new TreeMap<>();
+            } else {
+                ingredientsMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Ingredients>>() {
+                });
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 }
+

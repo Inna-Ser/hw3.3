@@ -2,12 +2,12 @@ package pro.sky.recipes.dto;
 
 import pro.sky.recipes.model.Ingredients;
 
+
 public class IngredientDTO {
     private final String name;
     private final int count;
     private final String unitOfMeasurement;
     private final int id;
-    private static Ingredients ingredients;
 
     public IngredientDTO(int id, String name, int count, String unitOfMeasurement) {
         this.name = name;

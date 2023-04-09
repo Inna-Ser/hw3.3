@@ -3,12 +3,11 @@ package pro.sky.recipes;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @SpringBootApplication
-public class RecipeApplication {
+public class IngredientsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RecipeApplication.class, args);
-    }
+        SpringApplication.run(IngredientsApplication.class, args);
 
+    }
 }

@@ -3,7 +3,6 @@ package pro.sky.recipes.dto;
 import pro.sky.recipes.model.Ingredients;
 import pro.sky.recipes.model.Recipe;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class RecipeDTO {

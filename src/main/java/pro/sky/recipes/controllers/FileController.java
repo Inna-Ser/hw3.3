@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pro.sky.recipes.services.impl.FileIngredientImpl;
 import pro.sky.recipes.services.impl.FileRecipeImpl;
+import pro.sky.recipes.services.impl.RecipeServiceImpl;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/files")
@@ -21,6 +23,7 @@ public class FileController {
 
     private FileRecipeImpl recipeFileService;
     private FileIngredientImpl ingredientFileService;
+    private RecipeServiceImpl recipeService;
 
     public FileController(FileRecipeImpl recipeFileService, FileIngredientImpl ingredientFileService) {
         this.recipeFileService = recipeFileService;
@@ -42,7 +45,6 @@ public class FileController {
                                     mediaType = "application/json"
                             )
                     }
-
             )
     })
     public ResponseEntity<InputStreamResource> downloadDateFile() throws FileNotFoundException {
@@ -72,7 +74,6 @@ public class FileController {
                                     mediaType = "application/json"
                             )
                     }
-
             )
     })
     public ResponseEntity<Void> uploadDateFileIngredient(@RequestParam MultipartFile file) {
@@ -102,7 +103,6 @@ public class FileController {
                                     mediaType = "application/json"
                             )
                     }
-
             )
     })
     public ResponseEntity<Void> uploadDateFileRecipe(@RequestParam MultipartFile file) {
@@ -117,4 +117,31 @@ public class FileController {
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+
+    @GetMapping("/recipe/exportTxt")
+    @Operation(
+            summary = "getting recipes in text format",
+            description = "without parameters"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "recipes were received",
+                    content = {
+                            @Content(
+                                    mediaType = "application/txt"
+                            )
+                    }
+            )
+    })
+    public void downloadRecipes(HttpServletResponse response) throws IOException {
+        ContentDisposition disposition = ContentDisposition.attachment()
+                .name("recipes.txt")
+                .build();
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, disposition.toString());
+        response.setContentType("text/plain");
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        recipeService.addRecipeStringFormat(response.getWriter());
+    }
+
 }

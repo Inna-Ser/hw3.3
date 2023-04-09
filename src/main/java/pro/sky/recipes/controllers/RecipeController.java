@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,11 @@ import pro.sky.recipes.dto.RecipeDTO;
 import pro.sky.recipes.model.Recipe;
 import pro.sky.recipes.services.impl.RecipeServiceImpl;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -72,15 +76,6 @@ public class RecipeController {
     })
     public List<RecipeDTO> getAllRecipe() {
         return recipeService.getAllRecipe();
-    }
-
-    @GetMapping("/recipe")
-    public void addRecipeStringFormat(@PathVariable PrintWriter writer) {
-        try {
-            recipeService.addRecipeStringFormat(writer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @PostMapping
